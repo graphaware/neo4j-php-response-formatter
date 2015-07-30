@@ -19,6 +19,11 @@ use GraphAware\NeoClient\Formatter\Graph\RelationshipsCollection;
 
 class ResultFormatter
 {
+    public static function getDefaultResultDataContents()
+    {
+        return array("graph", "rest");
+    }
+
     /**
      * @param array $result
      * @return \GraphAware\NeoClient\Formatter\Result
@@ -33,7 +38,12 @@ class ResultFormatter
         $graph = $this->getGraphData($graphData);
         $identificationTable = $this->getIdentifiersReferences($table, $graph);
 
-        return new Result($table, $graph, $identificationTable);
+        $result0 = new Result($table, $graph, $identificationTable);
+        if (isset($result['plan'])) {
+            $result0->setQueryPlan(new QueryPlan($result['plan']));
+        }
+
+        return $result0;
     }
 
     /**

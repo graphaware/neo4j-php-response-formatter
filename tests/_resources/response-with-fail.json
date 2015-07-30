@@ -1,0 +1,9 @@
+{
+    "errors": [
+        {
+            "code": "Neo.ClientError.Statement.InvalidSyntax", 
+            "message": "Invalid input 'E' (line 1, column 6 (offset: 5))\n\"MATCHE (n) RETURN count(n) as x\"\n      ^"
+        }
+    ], 
+    "results": []
+}

@@ -36,6 +36,11 @@ class Result
     protected $identificationTable;
 
     /**
+     * @var null|\GraphAware\NeoClient\Formatter\QueryPlan
+     */
+    protected $queryPlan;
+
+    /**
      * @param \GraphAware\NeoClient\Formatter\Table $table
      * @param \GraphAware\NeoClient\Formatter\Graph\Graph $graph
      * @param array $identificationTable
@@ -81,5 +86,21 @@ class Result
         if (!array_key_exists($key, $this->identificationTable)) {
             throw new \InvalidArgumentException(sprintf('There is no identifier with key "%s"', $key));
         }
+    }
+
+    /**
+     * @param \GraphAware\NeoClient\Formatter\QueryPlan $queryPlan
+     */
+    public function setQueryPlan(QueryPlan $queryPlan)
+    {
+        $this->queryPlan = $queryPlan;
+    }
+
+    /**
+     * @return null|\GraphAware\NeoClient\Formatter\QueryPlan
+     */
+    public function getQueryPlan()
+    {
+        return $this->queryPlan;
     }
 }

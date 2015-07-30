@@ -123,6 +123,6 @@ class Response implements Neo4jHttpResponseInterface
      */
     public function deserializeBody()
     {
-        $this->body = json_decode((string) $this->httpResponse->getBody());
+        $this->body = json_decode((string) $this->httpResponse->getBody(), true);
     }
 }

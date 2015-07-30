@@ -16,27 +16,14 @@ use Psr\Http\Message\ResponseInterface;
 class ResponseFormattingService
 {
     /**
-     * @var
-     */
-    protected $nodeClass;
-
-    /**
-     * @var
-     */
-    protected $resultClass;
-
-    /**
      * @var \GraphAware\NeoClient\Formatter\ResultFormatter
      */
     protected $resultFormatter;
 
-
     /**
-     * @param $resultClass
-     * @param $nodeClass
-     * @param $relationshipClass
+     *
      */
-    public function __construct($resultClass, $nodeClass, $relationshipClass)
+    public function __construct()
     {
         $this->resultFormatter = new ResultFormatter();
     }
@@ -53,10 +40,19 @@ class ResponseFormattingService
             if (isset($body['results']) && is_array($body['results'])) {
                 foreach ($body['results'] as $queryResult) {
                     $result = $this->resultFormatter->formatResult($queryResult);
+                    $response->addResult($result);
                 }
             }
         }
 
         return $response;
+    }
+
+    /**
+     * @return \GraphAware\NeoClient\Formatter\ResultFormatter
+     */
+    public function getResultFormatter()
+    {
+        return $this->resultFormatter;
     }
 }
