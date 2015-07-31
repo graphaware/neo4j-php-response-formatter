@@ -13,6 +13,12 @@ namespace GraphAware\NeoClient\Formatter\Graph;
 
 class Relationship
 {
+    const DIRECTION_INCOMING = 'INCOMING';
+
+    const DIRECTION_OUTGOING = 'OUTGOING';
+
+    const DIRECTION_BOTH = 'BOTH';
+
     /**
      * @var int
      */
@@ -88,6 +94,19 @@ class Relationship
      */
     public function getProperties() {
         return $this->properties;
+    }
+
+    /**
+     * @param $key
+     * @return null|mixed
+     */
+    public function getProperty($key)
+    {
+        if (!array_key_exists($key, $this->properties)) {
+            return null;
+        }
+
+        return $this->properties[$key];
     }
 
 
