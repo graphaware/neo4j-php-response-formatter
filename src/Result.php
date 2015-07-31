@@ -33,7 +33,7 @@ class Result
     /**
      * @var array
      */
-    protected $identificationTable;
+    private $identificationTable;
 
     /**
      * @var null|\GraphAware\NeoClient\Formatter\QueryPlan
@@ -80,12 +80,26 @@ class Result
     /**
      * @param string $key
      */
-    public function get($key)
+    public function get($key, $oneElementArraysAsSingleValue = false)
     {
         $key = (string) $key;
         if (!array_key_exists($key, $this->identificationTable)) {
             throw new \InvalidArgumentException(sprintf('There is no identifier with key "%s"', $key));
         }
+
+        $values = $this->identificationTable[$key];
+
+        if (is_array($values) && $oneElementArraysAsSingleValue) {
+            if (0 === count($values)) {
+                return null;
+            }
+
+            if (1 === count($values)) {
+                return $values[0];
+            }
+        }
+
+        return $values;
     }
 
     /**

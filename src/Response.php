@@ -80,11 +80,15 @@ class Response implements Neo4jHttpResponseInterface
 
     /**
      * @param $key
-     * @return mixed
+     * @return \GraphAware\NeoClient\Formatter\Result
      */
-    public function getResult($key)
+    public function getResult($key = null)
     {
-        return $this->results[$key];
+        if (null !== $key) {
+            return $this->results[$key];
+        } else {
+            return $this->results[0];
+        }
     }
 
     /**

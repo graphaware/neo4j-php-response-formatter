@@ -14,8 +14,12 @@ class IntegrationTest extends \PHPUnit_Framework_TestCase
           ->addConnection('default', 'http', 'localhost', 7474, true, 'neo4j', 'veryCoolMax')
           ->setAutoFormatResponse(true)
           ->setResponseFormatterClass('GraphAware\NeoClient\Formatter\Adapter')
+          ->enableNewFormattingService()
           ->build();
 
+        $response = $client->sendCypherQuery('MATCH (n) RETURN count(n) as nodesCount');
+
+        $this->assertInstanceOf('GraphAware\NeoClient\Formatter\Response', $response);
 
     }
 
