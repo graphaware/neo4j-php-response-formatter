@@ -84,11 +84,16 @@ class Response implements Neo4jHttpResponseInterface
      */
     public function getResult($key = null)
     {
-        if (null !== $key) {
-            return $this->results[$key];
-        } else {
-            return $this->results[0];
+        if (null !== $key && !array_key_exists($key, $this->results)) {
+            throw new \InvalidArgumentException(sprintf('There is no result with key "%s"', $key));
         }
+
+        if (empty($this->results)) {
+            return null;
+        }
+        $k = null !== $key ? $key : 0;
+
+        return $this->results[$k];
     }
 
     /**

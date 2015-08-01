@@ -36,6 +36,11 @@ class ResponseTest extends \PHPUnit_Framework_TestCase
         $this->assertInstanceOf('GraphAware\NeoClient\Formatter\Neo4jError', $response->getError());
     }
 
+    public function testGetResultWillReturnNullWhenNoResultsArePresent()
+    {
+        $this->assertNull($this->response->getResult());
+    }
+
     /**
      * @param $file
      * @return \GuzzleHttp\Psr7\Response
