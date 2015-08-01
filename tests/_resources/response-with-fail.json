@@ -1,9 +1,143 @@
+POST /db/data/transaction/commit HTTP/1.1
+Accept: application/json
+Accept-Encoding: gzip, deflate
+Connection: keep-alive
+Content-Length: 278
+Content-Type: application/json; charset=utf-8
+Host: localhost:7474
+User-Agent: HTTPie/0.9.0
+
 {
-    "errors": [
+    "statements": [
         {
-            "code": "Neo.ClientError.Statement.InvalidSyntax", 
-            "message": "Invalid input 'E' (line 1, column 6 (offset: 5))\n\"MATCHE (n) RETURN count(n) as x\"\n      ^"
+            "params": [], 
+            "resultDataContents": [
+                "row", 
+                "graph", 
+                "rest"
+            ], 
+            "statement": "CREATE (n:User)-[r:KNOWS]->(b:User {id:234}) RETURN *"
         }
-    ], 
-    "results": []
+    ]
+}
+
+HTTP/1.1 200 OK
+Access-Control-Allow-Origin: *
+Content-Length: 2931
+Content-Type: application/json
+Date: Fri, 31 Jul 2015 01:17:45 GMT
+Server: Jetty(9.2.4.v20141103)
+
+{
+    "errors": [], 
+    "results": [
+        {
+            "columns": [
+                "b", 
+                "n", 
+                "r"
+            ], 
+            "data": [
+                {
+                    "graph": {
+                        "nodes": [
+                            {
+                                "id": "3576", 
+                                "labels": [
+                                    "User"
+                                ], 
+                                "properties": {}
+                            }, 
+                            {
+                                "id": "3577", 
+                                "labels": [
+                                    "User"
+                                ], 
+                                "properties": {
+                                    "id": 234
+                                }
+                            }
+                        ], 
+                        "relationships": [
+                            {
+                                "endNode": "3577", 
+                                "id": "57", 
+                                "properties": {}, 
+                                "startNode": "3576", 
+                                "type": "KNOWS"
+                            }
+                        ]
+                    }, 
+                    "rest": [
+                        {
+                            "all_relationships": "http://localhost:7474/db/data/node/3577/relationships/all", 
+                            "all_typed_relationships": "http://localhost:7474/db/data/node/3577/relationships/all/{-list|&|types}", 
+                            "create_relationship": "http://localhost:7474/db/data/node/3577/relationships", 
+                            "data": {
+                                "id": 234
+                            }, 
+                            "incoming_relationships": "http://localhost:7474/db/data/node/3577/relationships/in", 
+                            "incoming_typed_relationships": "http://localhost:7474/db/data/node/3577/relationships/in/{-list|&|types}", 
+                            "labels": "http://localhost:7474/db/data/node/3577/labels", 
+                            "metadata": {
+                                "id": 3577, 
+                                "labels": [
+                                    "User"
+                                ]
+                            }, 
+                            "outgoing_relationships": "http://localhost:7474/db/data/node/3577/relationships/out", 
+                            "outgoing_typed_relationships": "http://localhost:7474/db/data/node/3577/relationships/out/{-list|&|types}", 
+                            "paged_traverse": "http://localhost:7474/db/data/node/3577/paged/traverse/{returnType}{?pageSize,leaseTime}", 
+                            "properties": "http://localhost:7474/db/data/node/3577/properties", 
+                            "property": "http://localhost:7474/db/data/node/3577/properties/{key}", 
+                            "self": "http://localhost:7474/db/data/node/3577", 
+                            "traverse": "http://localhost:7474/db/data/node/3577/traverse/{returnType}"
+                        }, 
+                        {
+                            "all_relationships": "http://localhost:7474/db/data/node/3576/relationships/all", 
+                            "all_typed_relationships": "http://localhost:7474/db/data/node/3576/relationships/all/{-list|&|types}", 
+                            "create_relationship": "http://localhost:7474/db/data/node/3576/relationships", 
+                            "data": {}, 
+                            "incoming_relationships": "http://localhost:7474/db/data/node/3576/relationships/in", 
+                            "incoming_typed_relationships": "http://localhost:7474/db/data/node/3576/relationships/in/{-list|&|types}", 
+                            "labels": "http://localhost:7474/db/data/node/3576/labels", 
+                            "metadata": {
+                                "id": 3576, 
+                                "labels": [
+                                    "User"
+                                ]
+                            }, 
+                            "outgoing_relationships": "http://localhost:7474/db/data/node/3576/relationships/out", 
+                            "outgoing_typed_relationships": "http://localhost:7474/db/data/node/3576/relationships/out/{-list|&|types}", 
+                            "paged_traverse": "http://localhost:7474/db/data/node/3576/paged/traverse/{returnType}{?pageSize,leaseTime}", 
+                            "properties": "http://localhost:7474/db/data/node/3576/properties", 
+                            "property": "http://localhost:7474/db/data/node/3576/properties/{key}", 
+                            "self": "http://localhost:7474/db/data/node/3576", 
+                            "traverse": "http://localhost:7474/db/data/node/3576/traverse/{returnType}"
+                        }, 
+                        {
+                            "data": {}, 
+                            "end": "http://localhost:7474/db/data/node/3577", 
+                            "metadata": {
+                                "id": 57, 
+                                "type": "KNOWS"
+                            }, 
+                            "properties": "http://localhost:7474/db/data/relationship/57/properties", 
+                            "property": "http://localhost:7474/db/data/relationship/57/properties/{key}", 
+                            "self": "http://localhost:7474/db/data/relationship/57", 
+                            "start": "http://localhost:7474/db/data/node/3576", 
+                            "type": "KNOWS"
+                        }
+                    ], 
+                    "row": [
+                        {
+                            "id": 234
+                        }, 
+                        {}, 
+                        {}
+                    ]
+                }
+            ]
+        }
+    ]
 }

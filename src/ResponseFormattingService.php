@@ -39,8 +39,10 @@ class ResponseFormattingService
             $body = $response->getBody();
             if (isset($body['results']) && is_array($body['results'])) {
                 foreach ($body['results'] as $queryResult) {
-                    $result = $this->resultFormatter->formatResult($queryResult);
-                    $response->addResult($result);
+                    if (isset($queryResult['data'][0])) {
+                        $result = $this->resultFormatter->formatResult($queryResult);
+                        $response->addResult($result);
+                    }
                 }
             }
         }
