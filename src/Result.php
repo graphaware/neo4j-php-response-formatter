@@ -51,6 +51,7 @@ class Result
         $this->nodesCollection = $graph->getNodesCollection();
         $this->relationshipsCollection = $graph->getRelationshipsCollection();
         $this->identificationTable = $identificationTable;
+        //print_r($identificationTable);
     }
 
     /**

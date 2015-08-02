@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "ac86acb92ddfac3ec9f3e95ed68b6a32",
+    "hash": "637b53ca3d9ecd4df898af2ec9f5dc99",
     "packages": [
         {
             "name": "psr/http-message",
@@ -110,6 +110,51 @@
                 "instantiate"
             ],
             "time": "2015-06-14 21:17:01"
+        },
+        {
+            "name": "graphaware/neo4j-graphunit",
+            "version": "1.0.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/graphaware/php-graphunit.git",
+                "reference": "87ef667cc89a6ae4bd4d6ccd3d8036e9bafbed22"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/graphaware/php-graphunit/zipball/87ef667cc89a6ae4bd4d6ccd3d8036e9bafbed22",
+                "reference": "87ef667cc89a6ae4bd4d6ccd3d8036e9bafbed22",
+                "shasum": ""
+            },
+            "require": {
+                "neoxygen/neoclient": "^3.1",
+                "phpunit/phpunit": "^4.7"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "GraphAware\\Neo4j\\GraphUnit\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Christophe Willemsen",
+                    "email": "willemsen.christophe@gmail.com"
+                }
+            ],
+            "description": "Graph Database Assertion Tool for Neo4j",
+            "keywords": [
+                "assertion",
+                "database",
+                "graph",
+                "neo4j",
+                "nosql",
+                "tests"
+            ],
+            "time": "2015-07-30 15:07:17"
         },
         {
             "name": "guzzlehttp/guzzle",
@@ -360,16 +405,16 @@
         },
         {
             "name": "neoxygen/neoclient",
-            "version": "3.3.0",
+            "version": "3.3.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/neoxygen/neo4j-neoclient.git",
-                "reference": "6c79f54a8fd998df996f6e53bad6be24a9555a2e"
+                "reference": "935aa2d719486236235f9b7ed0de9b631dfebe56"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/neoxygen/neo4j-neoclient/zipball/6c79f54a8fd998df996f6e53bad6be24a9555a2e",
-                "reference": "6c79f54a8fd998df996f6e53bad6be24a9555a2e",
+                "url": "https://api.github.com/repos/neoxygen/neo4j-neoclient/zipball/935aa2d719486236235f9b7ed0de9b631dfebe56",
+                "reference": "935aa2d719486236235f9b7ed0de9b631dfebe56",
                 "shasum": ""
             },
             "require": {
@@ -419,7 +464,7 @@
                 "high-availibility",
                 "neo4j"
             ],
-            "time": "2015-07-30 23:47:42"
+            "time": "2015-08-01 01:18:52"
         },
         {
             "name": "phpdocumentor/reflection-docblock",

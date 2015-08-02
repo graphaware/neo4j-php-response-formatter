@@ -31,11 +31,9 @@ class ResultFormatter
     public function formatResult(array $result)
     {
         $columns = $result['columns'];
-        $data = $result['data'][0];
-        $graphData = isset($data['graph']) ? $data['graph'] : null;
-        $restData = isset($data['rest']) ? $data['rest'] : null;
-        $table = $this->processTableFormat($columns, $restData);
-        $graph = $this->getGraphData($graphData);
+        $data = $result['data'];
+        $table = $this->processTableFormat($columns, $data);
+        $graph = $this->getGraphData($data);
         $identificationTable = $this->getIdentifiersReferences($table, $graph);
 
         $result0 = new Result($table, $graph, $identificationTable);
@@ -48,17 +46,17 @@ class ResultFormatter
 
     /**
      * @param array $columns
-     * @param array $restData
+     * @param array $results
      * @return \GraphAware\NeoClient\Formatter\Table
      */
-    public function processTableFormat(array $columns, array $restData)
+    public function processTableFormat(array $columns, array $results)
     {
         $table = new Table($columns);
-        $cCount = count($columns);
-        for ($i = 0; $i < $cCount; $i++) {
+        foreach ($results as $result) {
             $row = [];
-            foreach ($columns as $x => $column) {
-                $row[$column] = $this->getRestDataForTable($restData[$x]);
+            foreach ($columns as $i => $col) {
+                $v = $this->getRestDataForTable($result['rest'][$i]);
+                $row[$col] = $v;
             }
             $table->addRow($row);
         }
@@ -119,25 +117,28 @@ class ResultFormatter
     }
 
     /**
-     * @param array $graphData
+     * @param array $results
      * @return \GraphAware\NeoClient\Formatter\Graph\Graph
      */
-    public function getGraphData(array $graphData)
+    public function getGraphData(array $results)
     {
         $nodes = new NodesCollection();
         $relationships = new RelationshipsCollection();
-        foreach ($graphData['nodes'] as $data) {
-            $node = new Node($data['id'], $data['labels'], $data['properties']);
-            $nodes->addNode($node, $node->getId());
-        }
+        foreach ($results as $result) {
+            $graphData = $result['graph'];
+            foreach ($graphData['nodes'] as $data) {
+                $node = new Node($data['id'], $data['labels'], $data['properties']);
+                $nodes->addNode($node, $node->getId());
+            }
 
-        foreach ($graphData['relationships'] as $data) {
-            $start = $nodes->getNode($data['startNode']);
-            $end = $nodes->getNode($data['endNode']);
-            $relationship = new Relationship($data['id'], $start, $end, $data['type'], $data['properties']);
-            $relationships->addRelationship($relationship, $relationship->getId());
-            $start->addRelationship($relationship);
-            $end->addRelationship($relationship);
+            foreach ($graphData['relationships'] as $data) {
+                $start = $nodes->getNode($data['startNode']);
+                $end = $nodes->getNode($data['endNode']);
+                $relationship = new Relationship($data['id'], $start, $end, $data['type'], $data['properties']);
+                $relationships->addRelationship($relationship, $relationship->getId());
+                $start->addRelationship($relationship);
+                $end->addRelationship($relationship);
+            }
         }
 
         $graph = new Graph($nodes, $relationships);
@@ -155,13 +156,20 @@ class ResultFormatter
         $identificationTable = [];
         foreach ($table->getRows() as $row) {
             foreach ($row as $identifier => $value) {
-                $identificationTable[$identifier][] = $value;
+                if (isset($value['data_type'])) {
+                    $object = $this->transformIdentificationToObject($value, $graph);
+                    if (!isset($identificationTable[$identifier]) || !in_array($object, $identificationTable[$identifier])) {
+                        $identificationTable[$identifier][] = $object;
+                    }
+                } else {
+                    $identificationTable[$identifier][] = $value;
+                }
             }
         }
 
         foreach ($identificationTable as $identifier => $identifications) {
             foreach ($identifications as $i => $identification) {
-                if (isset($identification['data_type'])) {
+                if (!is_object($identification) && isset($identification['data_type'])) {
                     $identificationTable[$identifier][$i] = $this->transformIdentificationToObject($identification, $graph);
                 } elseif (is_array($identification) && isset($identification[0])) {
                     foreach ($identification as $y => $subIdentification) {
@@ -172,6 +180,8 @@ class ResultFormatter
                 }
             }
         }
+
+        //print_R($identificationTable);
 
         return $identificationTable;
     }
