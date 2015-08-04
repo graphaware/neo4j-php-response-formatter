@@ -94,18 +94,6 @@ class Result
     }
 
     /**
-     * @return \GraphAware\NeoClient\Formatter\Graph\Relationship|null
-     */
-    public function getSingleRelationship()
-    {
-        if (count($this->getRelationships()) === 0) {
-            return null;
-        }
-
-        return $this->getRelationships()[0];
-    }
-
-    /**
      * @param string $key
      */
     public function get($key, $oneElementArraysAsSingleValue = false)

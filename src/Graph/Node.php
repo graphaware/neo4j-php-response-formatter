@@ -102,7 +102,7 @@ class Node
      * @return \GraphAware\NeoClient\Formatter\Graph\Relationship[]
      */
     public function getRelationships($type = null, $direction = null) {
-        $relationships = $this->getRelationships();
+        $relationships = $this->relationships->getRelationships();
         if (null !== $type) {
             $relationships = $this->filterRelationshipsByType($type, $relationships);
         }
@@ -168,9 +168,9 @@ class Node
     }
 
     /**
-     * @param $direction
-     * @param \GraphAware\NeoClient\Formatter\Graph\Relationship $relationship[]
-     * @return \GraphAware\NeoClient\Formatter\Graph\Relationship $relationship[]
+     * @param string $direction
+     * @param \GraphAware\NeoClient\Formatter\Graph\Relationship[] $relationships
+     * @return \GraphAware\NeoClient\Formatter\Graph\Relationship[]
      */
     private function filterRelationshipByDirection($direction, array $relationships)
     {
