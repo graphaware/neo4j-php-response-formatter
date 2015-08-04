@@ -51,7 +51,6 @@ class Result
         $this->nodesCollection = $graph->getNodesCollection();
         $this->relationshipsCollection = $graph->getRelationshipsCollection();
         $this->identificationTable = $identificationTable;
-        //print_r($identificationTable);
     }
 
     /**
@@ -68,6 +67,22 @@ class Result
     public function getNodes()
     {
         return $this->nodesCollection->getNodes();
+    }
+
+    /**
+     * @param $id
+     * @return \GraphAware\NeoClient\Formatter\Graph\Node|null
+     */
+    public function getNodeById($id)
+    {
+        $id = (int) $id;
+        foreach ($this->getNodes() as $node) {
+            if ($node->getId() === $id) {
+                return $node;
+            }
+        }
+
+        return null;
     }
 
     /**
