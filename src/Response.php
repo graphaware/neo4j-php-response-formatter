@@ -79,21 +79,47 @@ class Response implements Neo4jHttpResponseInterface
     }
 
     /**
-     * @param $key
      * @return \GraphAware\NeoClient\Formatter\Result
      */
-    public function getResult($key = null)
+    public function getSingleResult()
     {
-        if (null !== $key && !array_key_exists($key, $this->results)) {
-            throw new \InvalidArgumentException(sprintf('There is no result with key "%s"', $key));
-        }
-
         if (empty($this->results)) {
-            return null;
+            throw new \RuntimeException('The Response contains no results');
         }
-        $k = null !== $key ? $key : 0;
 
-        return $this->results[$k];
+        return $this->results[0];
+    }
+
+    /**
+     * @return \GraphAware\NeoClient\Formatter\Result|null
+     */
+    public function getSingleResultOrNull()
+    {
+        $this->throwExceptionIfMoreThanXResult();
+
+        if (isset($this->results[0])) {
+            return $this->results[0];
+        }
+
+        return null;
+    }
+
+    /**
+     * @return int
+     */
+    public function getResultsCount()
+    {
+        return count($this->results);
+    }
+
+    /**
+     * @param int $x
+     */
+    public function throwExceptionIfMoreThanXResult($x = 1)
+    {
+        if (count($this->results) > $x) {
+            throw new \RuntimeException('The Response contains more than one result');
+        }
     }
 
     /**

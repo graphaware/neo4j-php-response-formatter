@@ -5,6 +5,12 @@ namespace GraphAware\NeoClient\Formatter\Tests\Unit;
 use GuzzleHttp\Psr7\Response as HttpResponse;
 use GraphAware\NeoClient\Formatter\Response;
 
+/**
+ * Class ResponseTest
+ * @package GraphAware\NeoClient\Formatter\Tests\Unit
+ *
+ * @group response
+ */
 class ResponseTest extends \PHPUnit_Framework_TestCase
 {
     /**
@@ -38,7 +44,25 @@ class ResponseTest extends \PHPUnit_Framework_TestCase
 
     public function testGetResultWillReturnNullWhenNoResultsArePresent()
     {
-        $this->assertNull($this->response->getResult());
+        $this->assertNull($this->response->getSingleResultOrNull());
+    }
+
+    /**
+     * @expectedException \RuntimeException
+     */
+    public function testExceptionIsThrownWhenNoResultsButExpected()
+    {
+        $response = new Response($this->loadResponse(__DIR__.'/../_resources/response-with-fail.json'));
+        $response->getSingleResult();
+    }
+
+    /**
+     * @expectedException \RuntimeException
+     */
+    public function testExceptionIsThrownWhenCallingSingleResultButMoreResultsArePresent()
+    {
+        $response = new Response($this->loadResponse(__DIR__.'/../_resources/response-profile.json'));
+        $response->getSingleResult();
     }
 
     /**

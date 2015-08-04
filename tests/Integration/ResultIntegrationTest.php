@@ -20,7 +20,7 @@ class ResultIntegrationTest extends IntegrationBaseTest
         $this->conn->sendCypherQuery($q);
 
         $query = 'MATCH (n:User) WITH n LIMIT 1 RETURN n';
-        $result = $this->conn->sendCypherQuery($query)->getResult();
+        $result = $this->conn->sendCypherQuery($query)->getSingleResult();
 
         $this->assertCount(1, $result->get('n'));
         $this->assertInstanceOf('Graphaware\NeoClient\Formatter\Graph\Node', $result->get('n', true));
@@ -40,7 +40,7 @@ class ResultIntegrationTest extends IntegrationBaseTest
         OPTIONAL MATCH (m)-[r:FOLLOWS]->(other)
         RETURN m, r, other';
 
-        $result = $this->conn->sendCypherQuery($q)->getResult();
+        $result = $this->conn->sendCypherQuery($q)->getSingleResult();
 
         $this->assertCount(1, $result->get('m'));
         $this->assertCount(3, $result->get('other'));

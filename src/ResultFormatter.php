@@ -181,8 +181,6 @@ class ResultFormatter
             }
         }
 
-        //print_R($identificationTable);
-
         return $identificationTable;
     }
 

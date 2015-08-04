@@ -2,11 +2,10 @@
 
 namespace GraphAware\NeoClient\Formatter\Tests\Integration;
 
-use GraphAware\Neo4j\GraphUnit\Neo4jGraphDatabaseTestCase;
 use Neoxygen\NeoClient\Client;
 use Neoxygen\NeoClient\ClientBuilder;
 
-abstract class IntegrationBaseTest extends Neo4jGraphDatabaseTestCase
+abstract class IntegrationBaseTest
 {
     /**
      * @var \Neoxygen\NeoClient\Client
