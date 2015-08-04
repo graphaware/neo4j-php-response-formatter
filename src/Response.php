@@ -79,6 +79,18 @@ class Response implements Neo4jHttpResponseInterface
     }
 
     /**
+     * @deprecated will be removed in 4.0
+     */
+    public function getResult()
+    {
+        if (isset($this->results[0])) {
+            return $this->results[0];
+        }
+
+        return null;
+    }
+
+    /**
      * @return \GraphAware\NeoClient\Formatter\Result
      */
     public function getSingleResult()
