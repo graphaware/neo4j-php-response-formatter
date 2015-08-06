@@ -86,6 +86,20 @@ class Result
     }
 
     /**
+     * Returns a single node
+     *
+     * @return null|\GraphAware\NeoClient\Formatter\Graph\Node
+     */
+    public function getSingleNode()
+    {
+        if (count($this->nodesCollection->getNodes()) > 0) {
+            return array_values($this->getNodes())[0];
+        }
+
+        return null;
+    }
+
+    /**
      * @return \GraphAware\NeoClient\Formatter\Graph\Relationship[]
      */
     public function getRelationships()
@@ -132,5 +146,26 @@ class Result
     public function getQueryPlan()
     {
         return $this->queryPlan;
+    }
+
+    /**
+     * Returns whether or not this result contains the given identifier
+     *
+     * @param $identifier
+     * @return bool
+     */
+    public function hasIdentifier($identifier)
+    {
+        return array_key_exists($identifier, $this->identificationTable);
+    }
+
+    /**
+     * Returns all the identifiers in the result
+     *
+     * @return array
+     */
+    public function getIdentifiers()
+    {
+        return array_keys($this->identificationTable);
     }
 }
